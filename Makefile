@@ -8,3 +8,5 @@ runpeer2:
 	./peer2peer.out 2 notcorord 8097 8094
 clean:
 	rm *.out
+
+	./peer2peer.out 2 coordinator 8097
