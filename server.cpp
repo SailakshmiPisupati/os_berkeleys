@@ -7,11 +7,10 @@
 #include <pthread.h>
 #include <stdbool.h>
 
-
 int network_node_count, nodes_connected, server_time; 
 int new_time =0;
 int receiving_count =0;
-int client_timestamps[2];
+int client_timestamps[3];
 
 void create_server(short server_port);
 void *berkeleys_algorithm(void *socket_desc);
@@ -31,7 +30,7 @@ int main(int argc , char *argv[])
    if(strcmp(argv[2],"coordinator") == 0){
       printf("Process started. Process type is coordinator.\n");
       network_node_count = atoi(argv[1]);
-      printf("Number of nodes are %d\n", network_node_count);
+      printf("Total number of nodes in the network are:  %d\n", network_node_count);
       server_port = atoi(argv[3]);
       create_server(server_port);
     }
@@ -55,8 +54,7 @@ void create_server(short server_port){
     {
         printf("Could not create socket\n");
     }
-    printf("Server up and running....\n");
-     
+         
     //Prepare the sockaddr_in structure
     server.sin_family = AF_INET;
     server.sin_addr.s_addr = INADDR_ANY;
@@ -67,18 +65,18 @@ void create_server(short server_port){
         //print the error message
         perror("bind failed. Error");
     }
-    printf("bind done\n");
+    // printf("bind done\n");
      
     //Listen
-    listen(socket_desc , 3);
+    listen(socket_desc , 50);
      
     //Accept and incoming connection
     printf("Waiting for communication with the other nodes.\n");
     c = sizeof(struct sockaddr_in);
     srand(time(NULL));
-    //server_time = rand() % 50;
-    server_time = 50;
-    printf("Server time is %d\n", server_time);
+    server_time = rand() % 50;
+    //server_time = 50;
+    
     //Accept and incoming connection
    
     c = sizeof(struct sockaddr_in);
@@ -92,37 +90,35 @@ void create_server(short server_port){
         printf("Berkeleys algorithm\n");
 
         if(network_node_count == nodes_connected){
-        	printf("Creating a new thread for time synchronization.\n");
-            pthread_t sniffer_thread;
-            for(int i=0;i<network_node_count;i++){
-	            new_sock = (int *) malloc(1);
-	            *new_sock = connected_clients[i];
+        printf("Network node count %d and nodes connected %d\n", network_node_count,nodes_connected);
+            printf("Server time is %d\n", server_time);
+            for(int i=0;i<network_node_count;i++){  
+                pthread_t sniffer_thread;
+                // for(int i=0;i<network_node_count;i++){
+    	            new_sock = (int *) malloc(1);
+    	            *new_sock = connected_clients[i];
 
-	                      //sleep till all the clients connect.
-	            if( pthread_create( &sniffer_thread , NULL ,  berkeleys_algorithm , (void*) new_sock) < 0)
-	            {
-	              perror("could not create thread");
-	             
-	            } 
-
-	            int val = pthread_join( sniffer_thread , NULL);
-				printf("Thread endss %d\n", val);
-				
-				for(int i=0;i<network_node_count;i++){
-					int sync_time = (client_timestamps[i] * -1 ) + new_time;
-
-				printf("Sync time is :%d\n", sync_time);
-				snprintf(message, sizeof(message), "%d", sync_time);
-				int n0 = send(connected_clients[i], &message, sizeof(message),0);
-				if(n0 < 0){
-				  printf("Error in Sending\n");
-					}
-				}  
-            }
-              
-        }
-
-                
+    	            //sleep(20);         //sleep till all the clients connect.
+    	            if( pthread_create( &sniffer_thread , NULL ,  berkeleys_algorithm , (void*) new_sock) < 0)
+    	            {
+    	              perror("could not create thread");
+    	             
+    	            } 
+                  pthread_join( sniffer_thread , NULL);
+    				}
+            for(int i=0;i<network_node_count;i++){   
+            int sync_time =0;
+            sync_time = (client_timestamps[i] * -1 ) + new_time;
+            printf("Client time is %d new time is %d and sync time is %d\n", client_timestamps[i],new_time,sync_time);
+            printf("Sync time is :%d\n", sync_time);
+            snprintf(message, sizeof(message), "%d", sync_time);
+            printf("Sending message to %d\n", connected_clients[i]);
+            int n0 = send(connected_clients[i], &message, sizeof(message),0);
+            if(n0 < 0){
+                printf("Error in Sending\n");
+            } 
+            }    
+        }            
     }    
     if (client_sock < 0)
     {
@@ -138,8 +134,8 @@ int calculate_sync_time(int client_time){
     printf("Client timestamp is : %d\n", client_timestamps[receiving_count]);
     receiving_count++;
     if(receiving_count == network_node_count){
-    	int new_time= calculate_average();
-    	return new_time;
+    	int new_sync_time= calculate_average();
+    	return new_sync_time;
     }
 }
 
@@ -154,8 +150,8 @@ int calculate_average(){
 	}
 	average_time = sum / (network_node_count+1);
 	printf("Average time is %d\n", average_time);
-	int new_time = average_time + server_time;
-	printf("Server will now make its time to %d\n", new_time);
+	int new_server_time = average_time + server_time;
+	printf("Server will now make its time to %d\n", new_server_time);
 	return average_time;
 }
 
@@ -181,7 +177,18 @@ void *berkeleys_algorithm(void *socket_desc){
 	    printf("Client offset is %s\n", client_message);
 	    int client_time = atoi(client_message);
 	    
-	    int new_time =calculate_sync_time(client_time);
+	    new_time =calculate_sync_time(client_time);
+
+      // int sync_time =0;
+      // sync_time = (client_time * -1 ) + new_time;
+      // printf("Client time is %d new time is %d and sync time is %d\n", client_time,new_time,sync_time);
+      // printf("Sync time is :%d\n", sync_time);
+      // snprintf(message, sizeof(message), "%d", sync_time);
+      // printf("Sending message to %d\n", sock);
+      // int n0 = send(sock, &message, sizeof(message),0);
+      // if(n0 < 0){
+      //     printf("Error in Sending\n");
+      // }
 	     
   }
 }
