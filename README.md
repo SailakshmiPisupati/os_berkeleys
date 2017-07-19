@@ -1,6 +1,6 @@
 # Berkeley’s Algorithm and Totally Ordered Messages
 
-##[Berkeley's Algorithm] (https://en.wikipedia.org/wiki/Berkeley_algorithm)
+##[Berkeley's Algorithm](https://en.wikipedia.org/wiki/Berkeley_algorithm)
 
 ####Part 1
 
@@ -16,14 +16,22 @@ For the project following are the considerations made:
 6.	The server receives the offset, waits for offset from all nodes and then calculates the average time. A separate thread will calculate the average and send messages.
 7.	The server then adjust itself to the average time and sends out the adjust time for each process in the network.
 8.	Upon receiving the adjusting time, the processes adjust and print their new time.
-Learning from the project – Part1
-1.	To implement multicasting in TCP/IP
-2.	IPC and leader election
-3.	To implement Berkeley’s algorithm
-4.	To understand how to implement time synchronization in case of distributed systems.
-Issues Faces
-1.	Multicasting in case of TCP/IP
-Part 2
+
+>#####Learning from the project – Part1
+>1.	To implement multicasting in TCP/IP
+>2.	IPC and leader election
+>3.	To implement Berkeley’s algorithm
+>4.	To understand how to implement time synchronization in case of distributed systems.
+
+>#####Issues Faces
+>1.	Multicasting in case of TCP/IP
+
+####Part 2
+
+#####Total Ordered Messaging
+
+You may like to read [Lamport Timestamps](https://en.wikipedia.org/wiki/Lamport_timestamps) before reading Total Ordered Messages.
+
 The idea of the part 2 of the project is to work on the totally ordered messages in a distributed system where multicasting is done. For comparing the non-totally ordered messages and totally-ordered messages, two separate programs have been written.
 Implementation – Non-Totally Ordered Messages
 For the project following are the considerations made:
@@ -33,7 +41,9 @@ For the project following are the considerations made:
 4.	Each process sends out a message using a sender thread and receives the messages using the receiver thread.
 5.	Log files have been generated for each process, and we can view the ordering of messages being delivered.
 6.	Observation – The process state during each message received is inconsistent, i.e. the processes are not in synchronized state when it comes to the messages being received.
-Implementation – Totally Ordered Messages
+
+####Implementation – Totally Ordered Messages
+
 For the project following are the considerations made:
 1.	The number of processes in the network are 4. The number of nodes have been keep constant for testing as mentioned in the project description file.
 2.	For total-ordering of messages, sequencer algorithm has been used.
@@ -43,11 +53,14 @@ For the project following are the considerations made:
 6.	If the second parameter is null (i.e. does not contain a global sequence number) it will add that message to its message buffer, while if it contains a second parameter, it will check it with its local sequence number and print it out.
 7.	Log files have been generated for each process, and we can view the ordering of messages being delivered.
 8.	Observation – The process state during each message received is consistent, i.e. the processes are in synchronized state when it comes to the messages being received. The message buffer ensures that the messages are not dropped on receiving.
-Learning from part2
-1.	Totally ordering of messages
-2.	Multicasting in case of TCP/IP
-3.	Sequencer algorithm to achieve total-ordering of messages.
-P.S. -  An attempt has been made to make use of locks that acquire and release on a shared file, to get the counter. The program however needs to be tested for completeness. (File can be read – multicasting_with_locks.cpp).
+
+>#####Learning from part2
+
+>1.	Totally ordering of messages
+>2.	Multicasting in case of TCP/IP
+>3.	Sequencer algorithm to achieve total-ordering of messages.
+
+>P.S. -  An attempt has been made to make use of locks that acquire and release on a shared file, to get the counter. The program however needs to be tested for completeness. (File can be read – multicasting_with_locks.cpp).
 
 
 ####HOW TO RUN THE PROGRAMS
@@ -55,11 +68,13 @@ P.S. -  An attempt has been made to make use of locks that acquire and release o
 ####PART 1
 
 Run the following command in the make file
+| Command       | Description                                         |
+| ------------- |:---------------------------------------------------:|
 | make compile	| To compile both the client and the server programs. |
-| make run	| To run the daemon process program. |
-| make runp1 | To run process 1 program in the network |
-| make runp2 | To run process 2 program in the network |
-| make clean |	To remove the binary files in the directory. |
+| make run	    | To run the daemon process program.                  |
+| make runp1    | To run process 1 program in the network             |
+| make runp2    | To run process 2 program in the network             |
+| make clean    |	To remove the binary files in the directory.        |
 
 
 ####PART 2 – Non- Totally Ordered Messages.
