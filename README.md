@@ -1,8 +1,11 @@
-# os_project2
+# Berkeley’s Algorithm and Totally Ordered Messages
 
-Berkeley’s Algorithm and Totally Ordered Messages
-Part 1
-Implementation
+##[Berkeley's Algorithm] (https://en.wikipedia.org/wiki/Berkeley_algorithm)
+
+####Part 1
+
+####Implementation
+
 The idea of part 1 is to implement Berkeley’s algorithm for Time Synchronization between the difference processes in the network. We have made use of TCP/IP for the purpose.
 For the project following are the considerations made:
 1.	The number of processes in the network are set as command line arguments. The number of nodes have been keep constant for testing as mentioned in the project description file.
@@ -47,18 +50,20 @@ Learning from part2
 P.S. -  An attempt has been made to make use of locks that acquire and release on a shared file, to get the counter. The program however needs to be tested for completeness. (File can be read – multicasting_with_locks.cpp).
 
 
-HOW TO RUN THE PROGRAMS
+####HOW TO RUN THE PROGRAMS
 
-PART 1
+####PART 1
+
 Run the following command in the make file
-make compile	To compile both the client and the server programs.
-make run	To run the daemon process program.
-make runp1	To run process 1 program in the network
-make runp2	To run process 2 program in the network
-make clean	To remove the binary files in the directory.
+| make compile	| To compile both the client and the server programs. |
+| make run	| To run the daemon process program. |
+| make runp1 | To run process 1 program in the network |
+| make runp2 | To run process 2 program in the network |
+| make clean |	To remove the binary files in the directory. |
 
 
-PART 2 – Non- Totally Ordered Messages.
+####PART 2 – Non- Totally Ordered Messages.
+
 Run the following command in the make file
 make compile	To compile the server program.
 make run1	To run process 1 program in the network
@@ -66,7 +71,8 @@ make run2	To run process 2 program in the network
 make run3	To run process 3 program in the network
 make run4	To run process 4 program in the network
 
-PART 2 – Totally Ordered Messages.
+####PART 2 – Totally Ordered Messages.
+
 Run the following command in the make file
 make compile	To compile the process and sequencer program.
 make runseq	To run sequencer program in the network
