@@ -1,10 +1,12 @@
 # Berkeley’s Algorithm and Totally Ordered Messages
 
-##[Berkeley's Algorithm](https://en.wikipedia.org/wiki/Berkeley_algorithm)
+[Berkeley's Algorithm](https://en.wikipedia.org/wiki/Berkeley_algorithm)
 
-####Part 1
+Part 1
+======
 
-####Implementation
+Implementation
+--------------
 
 The idea of part 1 is to implement Berkeley’s algorithm for Time Synchronization between the difference processes in the network. We have made use of TCP/IP for the purpose.
 For the project following are the considerations made:
@@ -17,7 +19,8 @@ For the project following are the considerations made:
 7.	The server then adjust itself to the average time and sends out the adjust time for each process in the network.
 8.	Upon receiving the adjusting time, the processes adjust and print their new time.
 
->#####Learning from the project – Part1
+>Learning from the project – Part1
+>=================================
 >1.	To implement multicasting in TCP/IP
 >2.	IPC and leader election
 >3.	To implement Berkeley’s algorithm
@@ -26,9 +29,11 @@ For the project following are the considerations made:
 >#####Issues Faces
 >1.	Multicasting in case of TCP/IP
 
-####Part 2
+Part 2
+======
 
-#####Total Ordered Messaging
+Total Ordered Messaging
+-----------------------
 
 You may like to read [Lamport Timestamps](https://en.wikipedia.org/wiki/Lamport_timestamps) before reading Total Ordered Messages.
 
@@ -42,7 +47,8 @@ For the project following are the considerations made:
 5.	Log files have been generated for each process, and we can view the ordering of messages being delivered.
 6.	Observation – The process state during each message received is inconsistent, i.e. the processes are not in synchronized state when it comes to the messages being received.
 
-####Implementation – Totally Ordered Messages
+Implementation – Totally Ordered Messages
+>========================================
 
 For the project following are the considerations made:
 1.	The number of processes in the network are 4. The number of nodes have been keep constant for testing as mentioned in the project description file.
@@ -54,7 +60,8 @@ For the project following are the considerations made:
 7.	Log files have been generated for each process, and we can view the ordering of messages being delivered.
 8.	Observation – The process state during each message received is consistent, i.e. the processes are in synchronized state when it comes to the messages being received. The message buffer ensures that the messages are not dropped on receiving.
 
->#####Learning from part2
+>Learning from part 2
+>====================
 
 >1.	Totally ordering of messages
 >2.	Multicasting in case of TCP/IP
@@ -63,9 +70,11 @@ For the project following are the considerations made:
 >P.S. -  An attempt has been made to make use of locks that acquire and release on a shared file, to get the counter. The program however needs to be tested for completeness. (File can be read – multicasting_with_locks.cpp).
 
 
-####HOW TO RUN THE PROGRAMS
+HOW TO RUN THE PROGRAMS
+======================
 
-####PART 1
+PART 1
+======
 
 Run the following command in the make file
 | Command       | Description                                         |
@@ -77,7 +86,8 @@ Run the following command in the make file
 | make clean    |	To remove the binary files in the directory.        |
 
 
-####PART 2 – Non- Totally Ordered Messages.
+PART 2 – Non- Totally Ordered Messages.
+=======================================
 
 Run the following command in the make file
 make compile	To compile the server program.
@@ -86,7 +96,8 @@ make run2	To run process 2 program in the network
 make run3	To run process 3 program in the network
 make run4	To run process 4 program in the network
 
-####PART 2 – Totally Ordered Messages.
+PART 2 – Totally Ordered Messages.
+==================================
 
 Run the following command in the make file
 make compile	To compile the process and sequencer program.
