@@ -19,21 +19,8 @@ For the project following are the considerations made:
 7.	The server then adjust itself to the average time and sends out the adjust time for each process in the network.
 8.	Upon receiving the adjusting time, the processes adjust and print their new time.
 
->Learning from the project – Part1
->=================================
->1.	To implement multicasting in TCP/IP
->2.	IPC and leader election
->3.	To implement Berkeley’s algorithm
->4.	To understand how to implement time synchronization in case of distributed systems.
-
->#####Issues Faces
->1.	Multicasting in case of TCP/IP
-
-Part 2
-======
-
-Total Ordered Messaging
------------------------
+Part 2 - Total Ordered Messaging
+================================
 
 You may like to read [Lamport Timestamps](https://en.wikipedia.org/wiki/Lamport_timestamps) before reading Total Ordered Messages.
 
@@ -48,7 +35,7 @@ For the project following are the considerations made:
 6.	Observation – The process state during each message received is inconsistent, i.e. the processes are not in synchronized state when it comes to the messages being received.
 
 Implementation – Totally Ordered Messages
->========================================
+-----------------------------------------
 
 For the project following are the considerations made:
 1.	The number of processes in the network are 4. The number of nodes have been keep constant for testing as mentioned in the project description file.
@@ -59,52 +46,3 @@ For the project following are the considerations made:
 6.	If the second parameter is null (i.e. does not contain a global sequence number) it will add that message to its message buffer, while if it contains a second parameter, it will check it with its local sequence number and print it out.
 7.	Log files have been generated for each process, and we can view the ordering of messages being delivered.
 8.	Observation – The process state during each message received is consistent, i.e. the processes are in synchronized state when it comes to the messages being received. The message buffer ensures that the messages are not dropped on receiving.
-
->Learning from part 2
->====================
-
->1.	Totally ordering of messages
->2.	Multicasting in case of TCP/IP
->3.	Sequencer algorithm to achieve total-ordering of messages.
-
->P.S. -  An attempt has been made to make use of locks that acquire and release on a shared file, to get the counter. The program however needs to be tested for completeness. (File can be read – multicasting_with_locks.cpp).
-
-
-HOW TO RUN THE PROGRAMS
-======================
-
-PART 1
-======
-
-Run the following command in the make file
-| Command       | Description                                         |
-| ------------- |:---------------------------------------------------:|
-| make compile	| To compile both the client and the server programs. |
-| make run	    | To run the daemon process program.                  |
-| make runp1    | To run process 1 program in the network             |
-| make runp2    | To run process 2 program in the network             |
-| make clean    |	To remove the binary files in the directory.        |
-
-
-PART 2 – Non- Totally Ordered Messages.
-=======================================
-
-Run the following command in the make file
-make compile	To compile the server program.
-make run1	To run process 1 program in the network
-make run2	To run process 2 program in the network
-make run3	To run process 3 program in the network
-make run4	To run process 4 program in the network
-
-PART 2 – Totally Ordered Messages.
-==================================
-
-Run the following command in the make file
-make compile	To compile the process and sequencer program.
-make runseq	To run sequencer program in the network
-make runmulti1	To run process 1 program in the network
-make runmulti2	To run process 2 program in the network
-make runmulti3	To run process 3 program in the network
-
-
-
